@@ -1,7 +1,11 @@
 // Servicio de API para conectar con el backend Spring Boot
 import { ImagenProducto } from '@/types/imagenProducto';
-const API_URL = 'http://localhost:8080/api';
-export const BACKEND_URL = 'http://localhost:8080';
+// const API_URL = 'http://localhost:8080/api';
+// export const BACKEND_URL = 'http://localhost:8080';
+
+// Producción
+const API_URL = 'https://backend-sistema-ventas-production-d0a4.up.railway.app/api';
+export const BACKEND_URL = 'https://backend-sistema-ventas-production-d0a4.up.railway.app';
 
 export interface RegisterData {
   nombre: string;
