@@ -1,7 +1,7 @@
 // src/app/tienda/productos/page.tsx
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { FiFilter, FiChevronLeft, FiChevronRight, FiShoppingCart } from 'react-icons/fi';
@@ -234,7 +234,7 @@ const SidebarFiltros = ({ categorias, onFiltrosChange }: { categorias: Categoria
   );
 };
 
-const CatalogoPage = () => {
+const CatalogoContent = () => {
   const [productos, setProductos] = useState<ProductoResponse[]>([]);
   const [categorias, setCategorias] = useState<CategoriaResponse[]>([]);
   const [loading, setLoading] = useState(true);
@@ -394,6 +394,25 @@ const CatalogoPage = () => {
         </section>
       </div>
     </div>
+  );
+};
+
+const CatalogoPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-16rem)] py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 space-y-6 text-center">
+          <div className="mx-auto bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16 flex items-center justify-center animate-pulse">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-extrabold text-gray-900">Cargando...</h1>
+        </div>
+      </div>
+    }>
+      <CatalogoContent />
+    </Suspense>
   );
 };
 

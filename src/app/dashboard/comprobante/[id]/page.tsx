@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import { getComprobanteByVenta, getVentaById } from '@/lib/api';
 import type { Comprobante } from '@/lib/api';
 import type { Venta } from '@/types/venta';
 import { Printer, ArrowLeft, FileText } from 'lucide-react';
 
-export default function ComprobantePage() {
+function ComprobanteContent() {
   const params = useParams();
   const searchParams = useSearchParams();
   const [comprobante, setComprobante] = useState<Comprobante | null>(null);
@@ -251,5 +251,20 @@ export default function ComprobantePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ComprobantePage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 font-medium">Cargando comprobante...</p>
+        </div>
+      </div>
+    }>
+      <ComprobanteContent />
+    </Suspense>
   );
 }
